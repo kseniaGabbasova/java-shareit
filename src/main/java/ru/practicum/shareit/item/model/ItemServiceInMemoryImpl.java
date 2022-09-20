@@ -6,10 +6,7 @@ import ru.practicum.shareit.exception.ForbiddenOperationException;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.user.UserService;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +21,7 @@ public class ItemServiceInMemoryImpl implements ItemService {
         userService.getById(owner);
         List<Item> itemsByOwner = new ArrayList<>();
         for (Item item : items.values()) {
-            if (item.getOwner() == owner) {
+            if (Objects.equals(item.getOwner(), owner)) {
                 itemsByOwner.add(item);
             }
         }
