@@ -53,9 +53,9 @@ public class ItemServiceInMemoryImpl implements ItemService {
 
     @Override
     public Item update(Item item) throws NotFoundException {
-        if (items.containsKey(item.getId())) {
+        if (validateExistence(item)) {
             Item itemToUpdate = items.get(item.getId());
-            if (!itemToUpdate.getOwner().equals(item.getOwner())) {
+            if (!validateOwner(item, itemToUpdate)) {
                 throw new ForbiddenOperationException("Внести изменения может только обладатель");
             }
             if (item.getName() != null) {
@@ -97,6 +97,22 @@ public class ItemServiceInMemoryImpl implements ItemService {
             }
         }
         return foundItems;
+    }
+
+    private boolean validateOwner(Item item, Item anotherItem) {
+        if (item.getOwner().equals(anotherItem.getOwner())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private boolean validateExistence(Item item) {
+        if (items.containsKey(item.getId())) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
 
