@@ -53,24 +53,19 @@ public class ItemServiceInMemoryImpl implements ItemService {
 
     @Override
     public Item update(Item item) throws NotFoundException {
-        if (validateExistence(item)) {
-            Item itemToUpdate = items.get(item.getId());
-            if (!validateOwner(item, itemToUpdate)) {
-                throw new ForbiddenOperationException("Внести изменения может только обладатель");
-            }
-            if (item.getName() != null) {
-                itemToUpdate.setName(item.getName());
-            }
-            if (item.getDescription() != null) {
-                itemToUpdate.setDescription(item.getDescription());
-            }
-            if (item.getAvailable() != null) {
-                itemToUpdate.setAvailable(item.getAvailable());
-            }
-            return itemToUpdate;
-        } else {
-            throw new NotFoundException("Предмета с id = " + item.getId() + " не существует");
+        validateExistence(item);
+        Item itemToUpdate = items.get(item.getId());
+        validateOwner(item, itemToUpdate);
+        if (item.getName() != null) {
+            itemToUpdate.setName(item.getName());
         }
+        if (item.getDescription() != null) {
+            itemToUpdate.setDescription(item.getDescription());
+        }
+        if (item.getAvailable() != null) {
+            itemToUpdate.setAvailable(item.getAvailable());
+        }
+        return itemToUpdate;
     }
 
     @Override
@@ -99,19 +94,15 @@ public class ItemServiceInMemoryImpl implements ItemService {
         return foundItems;
     }
 
-    private boolean validateOwner(Item item, Item anotherItem) {
-        if (item.getOwner().equals(anotherItem.getOwner())) {
-            return true;
-        } else {
-            return false;
+    private void validateOwner(Item item, Item anotherItem) {
+        if (!item.getOwner().equals(anotherItem.getOwner())) {
+            throw new ForbiddenOperationException("Внести изменения может только обладатель");
         }
     }
 
-    private boolean validateExistence(Item item) {
-        if (items.containsKey(item.getId())) {
-            return true;
-        } else {
-            return false;
+    private void validateExistence(Item item) {
+        if (!items.containsKey(item.getId())) {
+            throw new NotFoundException("Предмета с id = " + item.getId() + " не существует");
         }
     }
 }
