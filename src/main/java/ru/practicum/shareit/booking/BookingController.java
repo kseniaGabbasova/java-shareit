@@ -29,21 +29,18 @@ public class BookingController {
     }
 
     @GetMapping("/{bookingId}")
-    //@ResponseStatus(OK)
     public BookingDto findById(@RequestHeader("X-Sharer-User-Id") Integer userId,
                                @PathVariable Integer bookingId) {
         return service.findById(userId, bookingId);
     }
 
     @GetMapping
-    //@ResponseStatus(OK)
     public List<BookingDto> findByUser(@RequestHeader("X-Sharer-User-Id") Integer userId,
                                        @RequestParam(defaultValue = "ALL") State state) {
         return service.findByBooker(userId, state);
     }
 
     @GetMapping("/owner")
-    //@ResponseStatus(OK)
     public List<BookingDto> findBookingByOwner(@RequestHeader("X-Sharer-User-Id") Integer userId,
                                                @RequestParam(defaultValue = "ALL") State state) {
         return service.findByOwner(userId, state);

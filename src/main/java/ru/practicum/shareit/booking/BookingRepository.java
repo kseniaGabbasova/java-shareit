@@ -39,7 +39,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             "SELECT * " +
             "FROM bookings " +
             "WHERE booker_id = ?1 " +
-            "AND start_date_time > ?2",
+            "AND start_date_time >?2",
             nativeQuery = true)
     List<Booking> findFutureByBooker(Integer bookerId, LocalDateTime localDateTime);
 
@@ -84,7 +84,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             "FROM bookings AS b " +
             "LEFT JOIN items AS i ON i.item_id = b.item_id " +
             "WHERE i.owner_id = ?1 " +
-            "AND start_date_time > ?2",
+            "AND start_date_time >?2",
             nativeQuery = true)
     List<Booking> findFutureByOwnerId(Integer ownerId, LocalDateTime localDateTime);
 
