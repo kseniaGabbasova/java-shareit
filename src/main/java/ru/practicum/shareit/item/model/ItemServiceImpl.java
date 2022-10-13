@@ -53,7 +53,7 @@ public class ItemServiceImpl implements ItemService {
         if (itemRepository.existsById(id)) {
             Item item = findById(id);
             ItemDto itemDto = ItemMapper.toItemDto(item);
-            if (item.getOwner().equals(userId) ) {
+            if (item.getOwner().equals(userId)) {
                 addBookings(itemDto);
             }
             addComments(itemDto);
