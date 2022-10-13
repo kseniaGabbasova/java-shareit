@@ -29,7 +29,6 @@ public class Item {
     private Boolean available;
     @Column(name = "owner_id")
     private Integer owner;
-    //@ManyToOne(fetch = LAZY)
     @Column(name = "request_id")
     private Integer request;
 }

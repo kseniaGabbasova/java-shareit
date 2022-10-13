@@ -8,7 +8,7 @@ import java.util.List;
 public interface ItemRepository extends JpaRepository<Item, Integer> {
     List<Item> findByOwner(Integer id);
 
-    @Query (value = "" +
+    @Query(value = "" +
             "SELECT * " +
             "FROM items " +
             "WHERE (item_name ILIKE ?1 " +

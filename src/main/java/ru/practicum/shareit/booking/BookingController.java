@@ -14,14 +14,12 @@ public class BookingController {
     private final BookingService service;
 
     @PostMapping
-    //@ResponseStatus(CREATED)
     public BookingDto add(@RequestHeader("X-Sharer-User-Id") Integer userId,
                           @RequestBody BookingDto bookingDto) {
         return service.add(userId, bookingDto);
     }
 
     @PatchMapping("{bookingId}")
-    //@ResponseStatus(OK)
     public BookingDto approveBooking(@PathVariable Integer bookingId,
                                      @RequestHeader("X-Sharer-User-Id") Integer userId,
                                      @RequestParam Boolean approved) {

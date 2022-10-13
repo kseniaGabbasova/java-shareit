@@ -19,15 +19,13 @@ public class BookingMapper {
 
     public static BookingDto toBookingDto(@NotNull Booking booking) {
         return new BookingDto(booking.getId(),
-                        booking.getStart(),
-                        booking.getEnd(),
-                new BookingDto.User(booking.getBooker().getId()
-                                //booking.getBooker().getName()),
-                ),
+                booking.getStart(),
+                booking.getEnd(),
+                new BookingDto.User(booking.getBooker().getId()),
                 new BookingDto.Item(booking.getItem().getId(),
-                                booking.getItem().getName()),
-                        booking.getItem().getId(),
-                        Status.getActualStatus(booking.getIsApproved(), booking.getIsCancelled()));
+                        booking.getItem().getName()),
+                booking.getItem().getId(),
+                Status.getActualStatus(booking.getIsApproved(), booking.getIsCancelled()));
 
     }
 }

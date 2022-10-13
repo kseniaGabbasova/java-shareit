@@ -26,7 +26,7 @@ public class ItemController {
     }
 
     @GetMapping("{id}")
-    public ItemDto getById(@RequestHeader("X-Sharer-User-Id") Integer userId,@PathVariable Integer id)
+    public ItemDto getById(@RequestHeader("X-Sharer-User-Id") Integer userId, @PathVariable Integer id)
             throws NotFoundException {
         return itemService.getById(id, userId);
     }

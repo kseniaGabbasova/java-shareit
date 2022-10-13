@@ -16,6 +16,8 @@ public class UserDto {
     private Integer id;
     @NotBlank(groups = Create.class)
     private String name;
-    @NotBlank(groups = Create.class) @Email(groups = Create.class) @Email(groups = Update.class)
+    @NotBlank(groups = Create.class)
+    @Email(groups = Create.class)
+    @Email(groups = Update.class)
     private String email;
 }
