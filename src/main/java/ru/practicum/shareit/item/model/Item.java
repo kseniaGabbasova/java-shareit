@@ -1,18 +1,35 @@
 package ru.practicum.shareit.item.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import ru.practicum.shareit.request.ItemRequest;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
-@Data
-@Builder
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+
+@NoArgsConstructor
 @AllArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+@Getter
+@Setter
+@Builder
+@Entity
+@Table(name = "items")
 public class Item {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "item_id")
     private Integer id;
+    @NotBlank
+    @Column(name = "item_name")
     private String name;
+    @NotBlank
+    @Column(name = "description")
     private String description;
+    @Column(name = "available")
     private Boolean available;
+    @Column(name = "owner_id")
     private Integer owner;
-    private ItemRequest request;
+    //@ManyToOne(fetch = LAZY)
+    @Column(name = "request_id")
+    private Integer request;
 }

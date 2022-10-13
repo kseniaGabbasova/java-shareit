@@ -1,15 +1,17 @@
 package ru.practicum.shareit.item.model;
 
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.item.comment.CommentDto;
+import ru.practicum.shareit.item.dto.ItemDto;
 
 import java.util.List;
 
 public interface ItemService {
     List<Item> getAll();
 
-    Item getById(Integer id) throws NotFoundException;
+    ItemDto getById(Integer id, Integer userId) throws NotFoundException;
 
-    List<Item> getAllByOwner(Integer owner) throws NotFoundException;
+    List<ItemDto> getAllByOwner(Integer owner) throws NotFoundException;
 
     Item add(Item item);
 
@@ -18,4 +20,8 @@ public interface ItemService {
     void delete(Integer id) throws NotFoundException;
 
     List<Item> search(String text);
+
+    CommentDto addComment(CommentDto commentDto, Integer itemId, Integer userId);
+
+    Item findById(Integer id);
 }

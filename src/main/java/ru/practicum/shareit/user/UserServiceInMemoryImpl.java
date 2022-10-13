@@ -1,11 +1,9 @@
 package ru.practicum.shareit.user;
 
-import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
 
 import java.util.*;
 
-@Service
 public class UserServiceInMemoryImpl implements UserService {
     private Integer currId = 0;
     private final Map<Integer, User> users = new HashMap<>();
