@@ -1,6 +1,7 @@
 package ru.practicum.shareit.booking.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.Booking;
 import ru.practicum.shareit.booking.BookingMapper;
@@ -21,6 +22,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
@@ -35,6 +37,7 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = BookingMapper.toBooking(bookingDto);
         booking.setItem(item);
         booking.setBooker(user);
+        log.info("Бронирование от пользователя c id = {} к вещи с id = {} сохранено", userId, item.getId());
         return BookingMapper.toBookingDto(bookingRepository.save(booking));
     }
 
@@ -47,6 +50,7 @@ public class BookingServiceImpl implements BookingService {
                 throw new NotFoundException("Недостаточно прав для выполнения операции.");
             }
         }
+        log.info("Получение бронирования с id = {}", booking.getId());
         return BookingMapper.toBookingDto(booking);
     }
 
@@ -59,6 +63,7 @@ public class BookingServiceImpl implements BookingService {
         User user = userService.getById(userId);
         Item item = itemService.findById(booking.getItem().getId());
         approvalValidation(item, user, booking, approved);
+        log.info("Бронирование с id = {} было одобрено", bookingId);
         return BookingMapper.toBookingDto(bookingRepository.save(booking));
     }
 
@@ -77,6 +82,7 @@ public class BookingServiceImpl implements BookingService {
     @Override
     public Booking findBookingOrException(Integer id) {
         Optional<Booking> booking = bookingRepository.findById(id);
+        log.info("Поиск бронирования с id = {}", id);
         return booking.orElseThrow(() -> new NotFoundException("Бронирование с id " + id + " не найдено."));
     }
 
@@ -113,6 +119,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private List<BookingDto> switchStateForOwner(Integer userId, State state) {
+        log.info("Получение бронирований владельца вещей с id = {} со статусом {}", userId, state);
         switch (state) {
             case ALL:
                 return bookingRepository.findAllByOwnerId(userId).stream()
@@ -151,6 +158,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     private List<BookingDto> switchStateForBooker(Integer userId, State state) {
+        log.info("Получение бронирований пользователя с id = {} со статусом {}", userId, state);
         switch (state) {
             case ALL:
                 return bookingRepository.findAllByBookerId(userId).stream()

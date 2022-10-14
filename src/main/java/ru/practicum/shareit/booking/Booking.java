@@ -1,10 +1,7 @@
 package ru.practicum.shareit.booking;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.User;
 
@@ -18,6 +15,7 @@ import java.time.LocalDateTime;
 @Table(name = "bookings")
 @Getter
 @Setter
+@ToString
 public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,5 +35,4 @@ public class Booking {
     private Boolean isApproved;
     @Column(name = "cancelled")
     private Boolean isCancelled;
-
 }

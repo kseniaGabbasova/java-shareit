@@ -1,6 +1,7 @@
 package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
 
@@ -8,6 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
@@ -20,6 +22,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getById(Integer id) throws NotFoundException {
         if (userRepository.existsById(id)) {
+            log.info("Получение пользователя с id = {}", id);
             return userRepository.getReferenceById(id);
         } else {
             throw new NotFoundException("Пользователя с id=" + id + " не существует");
@@ -28,6 +31,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User add(User user) {
+        log.info("Добавление пользователя {}", user);
         return userRepository.save(user);
     }
 
@@ -45,11 +49,13 @@ public class UserServiceImpl implements UserService {
                 throw new InternalError();
             }
         }
+        log.info("Пользователь с id = {} обновлен", id);
         return userToUpdate;
     }
 
     @Override
     public void delete(Integer id) throws NotFoundException {
+        log.info("Пользователь с id = {} удален", id);
         userRepository.delete(userRepository.getReferenceById(id));
     }
 }
