@@ -1,15 +1,31 @@
 package ru.practicum.shareit.user;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.*;
 
-@Data
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+
+@NoArgsConstructor
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 @AllArgsConstructor
 @Builder
+@Getter
+@Setter
+@ToString
+@Entity
+@Table(name = "users")
 public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private Integer id;
+    @NotBlank
+    @Column(name = "user_name")
     private String name;
+    @Email
+    @NotBlank
+    @Column(name = "email")
     private String email;
-
 }

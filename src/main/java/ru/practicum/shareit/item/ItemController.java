@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.item.comment.CommentDto;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.model.ItemMapper;
@@ -20,13 +21,14 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping("")
-    public List<Item> getAll(@RequestHeader("X-Sharer-User-Id") Integer userId) {
+    public List<ItemDto> getAll(@RequestHeader("X-Sharer-User-Id") Integer userId) {
         return itemService.getAllByOwner(userId);
     }
 
     @GetMapping("{id}")
-    public Item getById(@PathVariable Integer id) throws NotFoundException {
-        return itemService.getById(id);
+    public ItemDto getById(@RequestHeader("X-Sharer-User-Id") Integer userId, @PathVariable Integer id)
+            throws NotFoundException {
+        return itemService.getById(id, userId);
     }
 
     @PostMapping
@@ -54,6 +56,12 @@ public class ItemController {
     public List<Item> getAll(@RequestParam String text) {
         return itemService.search(text);
 
+    }
+
+    @PostMapping("/{itemId}/comment")
+    public CommentDto addComment(@RequestBody CommentDto commentDto, @PathVariable Integer itemId,
+                                 @RequestHeader("X-Sharer-User-Id") Integer userId) {
+        return itemService.addComment(commentDto, itemId, userId);
     }
 
 }
