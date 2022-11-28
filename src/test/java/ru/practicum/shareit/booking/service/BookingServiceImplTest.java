@@ -8,8 +8,14 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.practicum.shareit.booking.*;
+import org.springframework.web.server.ResponseStatusException;
+import ru.practicum.shareit.booking.Booking;
+import ru.practicum.shareit.booking.BookingRepository;
+import ru.practicum.shareit.booking.State;
+import ru.practicum.shareit.booking.Status;
 import ru.practicum.shareit.booking.dto.BookingDto;
+import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.exception.ValidationException;
 import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.item.model.ItemService;
 import ru.practicum.shareit.user.User;
@@ -103,6 +109,22 @@ class BookingServiceImplTest {
     }
 
     @Test
+    void cannotAddDueToPeriod() {
+        bookingDto1.setStart(LocalDateTime.now().minusHours(2));
+        when(userService.getById(anyInt())).thenReturn(user2);
+        when(itemService.findById(anyInt())).thenReturn(item);
+        Assertions.assertThrows(ValidationException.class, () -> bookingService.add(user2.getId(), bookingDto1));
+    }
+
+    @Test
+    void cannotAddDueToWrongUser() {
+        bookingDto1.setBooker(new BookingDto.User(user1.getId()));
+        when(userService.getById(anyInt())).thenReturn(user1);
+        when(itemService.findById(anyInt())).thenReturn(item);
+        Assertions.assertThrows(NotFoundException.class, () -> bookingService.add(user1.getId(), bookingDto1));
+    }
+
+    @Test
     void findById() {
         when(bookingRepository.findById(anyInt())).thenReturn(Optional.of(booking1));
         when(userService.getById(anyInt())).thenReturn(user2);
@@ -120,6 +142,23 @@ class BookingServiceImplTest {
         BookingDto result = bookingService.approveBooking(1, 1, true);
         Assertions.assertEquals(result.getId(), bookingDto1.getId());
         Assertions.assertEquals(result.getItemId(), bookingDto1.getItemId());
+    }
+
+    @Test
+    void approveBookingReject() {
+        when(bookingRepository.findById(anyInt())).thenReturn(Optional.of(booking1));
+        when(userService.getById(anyInt())).thenReturn(user1);
+        when(itemService.findById(anyInt())).thenReturn(item);
+        when(bookingRepository.save(any())).thenReturn(booking1);
+        BookingDto result = bookingService.approveBooking(1, 1, false);
+        Assertions.assertEquals(result.getId(), bookingDto1.getId());
+        Assertions.assertEquals(result.getItemId(), bookingDto1.getItemId());
+    }
+
+    @Test
+    void approveBookingFailWrongUser() {
+        Assertions.assertThrows(NotFoundException.class,
+                () -> bookingService.approveBooking(2, 1, true));
     }
 
     @Test
@@ -199,6 +238,13 @@ class BookingServiceImplTest {
     }
 
     @Test
+    void findByOwnerAllFail() {
+        when(userService.getById(anyInt())).thenReturn(user1);
+        Assertions.assertThrows(ResponseStatusException.class,
+                () -> bookingService.findByOwner(1, State.ALL, -1, 0));
+    }
+
+    @Test
     void findByOwnerRejected() {
         when(userService.getById(anyInt())).thenReturn(user1);
         when(itemService.findById(anyInt())).thenReturn(item);
@@ -261,4 +307,5 @@ class BookingServiceImplTest {
         Booking result = bookingService.findBookingOrException(1);
         Assertions.assertEquals(booking1, result);
     }
+
 }
