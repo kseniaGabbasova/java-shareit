@@ -10,7 +10,7 @@ public class ItemMapper {
                 .description(itemDto.getDescription())
                 .available(itemDto.getAvailable())
                 .owner(ownerId)
-                .request(request)
+                .requestId(request)
                 .build();
     }
 
@@ -20,7 +20,7 @@ public class ItemMapper {
                 item.getName(),
                 item.getDescription(),
                 item.getAvailable(),
-                item.getRequest() != null ? item.getRequest() : null,
+                item.getRequestId() != null ? item.getRequestId() : null,
                 null,
                 null,
                 null

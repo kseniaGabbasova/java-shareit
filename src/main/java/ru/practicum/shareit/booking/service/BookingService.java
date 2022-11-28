@@ -13,9 +13,9 @@ public interface BookingService {
 
     BookingDto approveBooking(Integer userId, Integer bookingId, Boolean approved);
 
-    List<BookingDto> findByBooker(Integer userId, State state);
+    List<BookingDto> findByBooker(Integer userId, State state, Integer from, Integer size);
 
-    List<BookingDto> findByOwner(Integer userId, State state);
+    List<BookingDto> findByOwner(Integer userId, State state, Integer from, Integer size);
 
     Booking findBookingOrException(Integer id);
 }

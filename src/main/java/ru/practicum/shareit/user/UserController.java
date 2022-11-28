@@ -20,23 +20,23 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("")
-    public List<User> getAll() {
+    public List<UserDto> getAll() {
         return userService.getAll();
     }
 
     @GetMapping("{id}")
-    public User getById(@PathVariable Integer id) throws NotFoundException {
-        return userService.getById(id);
+    public UserDto getById(@PathVariable Integer id) throws NotFoundException {
+        return UserMapper.toUserDto(userService.getById(id));
     }
 
     @PostMapping
-    public User create(@Validated(Create.class) @RequestBody UserDto userDto) throws ValidationException {
+    public UserDto create(@Validated(Create.class) @RequestBody UserDto userDto) throws ValidationException {
         User user = UserMapper.toUser(userDto);
         return userService.add(user);
     }
 
     @PatchMapping("{id}")
-    public User update(@PathVariable Integer id,
+    public UserDto update(@PathVariable Integer id,
                        @Validated(Update.class) @RequestBody UserDto userDto) throws ValidationException {
         User user = UserMapper.toUser(userDto);
         return userService.update(id, user);

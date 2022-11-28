@@ -13,15 +13,17 @@ public interface ItemService {
 
     List<ItemDto> getAllByOwner(Integer owner) throws NotFoundException;
 
-    Item add(Item item);
+    ItemDto add(Item item);
 
-    Item update(Item item) throws NotFoundException;
+    ItemDto update(Item item) throws NotFoundException;
 
     void delete(Integer id) throws NotFoundException;
 
-    List<Item> search(String text);
+    List<ItemDto> search(String text);
 
     CommentDto addComment(CommentDto commentDto, Integer itemId, Integer userId);
 
     Item findById(Integer id);
+
+    List<Item> getAllByRequestIdOrderByIdAsc(Long requestId);
 }

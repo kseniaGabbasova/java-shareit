@@ -1,6 +1,7 @@
 package ru.practicum.shareit.booking;
 
 import ru.practicum.shareit.booking.dto.BookingDto;
+import ru.practicum.shareit.item.model.Item;
 
 import javax.validation.constraints.NotNull;
 
@@ -17,14 +18,14 @@ public class BookingMapper {
         );
     }
 
-    public static BookingDto toBookingDto(@NotNull Booking booking) {
+    public static BookingDto toBookingDto(@NotNull Booking booking, Item item) {
         return new BookingDto(booking.getId(),
                 booking.getStart(),
                 booking.getEnd(),
-                new BookingDto.User(booking.getBooker().getId()),
-                new BookingDto.Item(booking.getItem().getId(),
-                        booking.getItem().getName()),
-                booking.getItem().getId(),
+                new BookingDto.User(booking.getBooker()),
+                new BookingDto.Item(item.getId(),
+                        item.getName()),
+                booking.getItem(),
                 Status.getActualStatus(booking.getIsApproved(), booking.getIsCancelled()));
 
     }

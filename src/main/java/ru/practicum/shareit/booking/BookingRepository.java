@@ -1,5 +1,6 @@
 package ru.practicum.shareit.booking;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -10,13 +11,12 @@ import java.util.List;
 
 public interface BookingRepository extends JpaRepository<Booking, Integer> {
     @Query(value = "" +
-            "SELECT * " +
+            "SELECT b.* " +
             "FROM bookings AS b " +
             "WHERE b.booker_id = ?1 " +
-            "AND NOT b.cancelled " +
             "ORDER BY b.start_date_time DESC",
             nativeQuery = true)
-    List<Booking> findAllByBookerId(Integer bookerId);
+    List<Booking> findAllByBookerId(Integer bookerId, Pageable pageable);
 
     @Query(value = "" +
             "SELECT * " +
@@ -60,7 +60,7 @@ public interface BookingRepository extends JpaRepository<Booking, Integer> {
             "WHERE i.owner_id = ?1 " +
             "ORDER BY start_date_time DESC ",
             nativeQuery = true)
-    List<Booking> findAllByOwnerId(Integer ownerId);
+    List<Booking> findAllByOwnerId(Integer ownerId, Pageable pageable);
 
     @Query(value = "" +
             "SELECT b.* " +

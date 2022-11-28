@@ -2,8 +2,6 @@ package ru.practicum.shareit.booking;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
-import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.User;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -25,12 +23,10 @@ public class Booking {
     private LocalDateTime start;
     @Column(name = "end_date_time")
     private LocalDateTime end;
-    @ManyToOne()
-    @JoinColumn(name = "item_id")
-    private Item item;
-    @ManyToOne()
-    @JoinColumn(name = "booker_id")
-    private User booker;
+    @Column(name = "item_id")
+    private Integer item;
+    @Column(name = "booker_id")
+    private Integer booker;
     @Column(name = "approved")
     private Boolean isApproved;
     @Column(name = "cancelled")

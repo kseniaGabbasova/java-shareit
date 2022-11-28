@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class ItemDto {
     private Integer id;
@@ -21,7 +22,7 @@ public class ItemDto {
     private String description;
     @NotNull(groups = Create.class)
     private Boolean available;
-    private Integer request;
+    private Integer requestId;
     private ItemDto.Booking lastBooking;
     private ItemDto.Booking nextBooking;
     private List<Comment> comments;
