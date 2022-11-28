@@ -133,4 +133,17 @@ class BookingControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json(mapper.writeValueAsString(List.of(bookingDto, bookingDto1))));
     }
+
+    @Test
+    void canThrowException() throws Exception {
+        mvc.perform(get("/bookings/owner")
+                        .characterEncoding(StandardCharsets.UTF_8)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+                        .header("X-Sharer-User-Id", 2)
+                        .param("state", "Does Not Exist")
+                        .param("from", "0")
+                        .param("size", "10"))
+                .andExpect(status().isBadRequest());
+    }
 }
