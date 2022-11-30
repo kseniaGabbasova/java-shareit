@@ -77,7 +77,7 @@ class ItemRequestServiceImplTest {
         when(itemRequestRepository.save(any()))
                 .thenReturn(itemRequest);
         ItemRequest itemRequestResult = itemRequestService.add(itemRequest);
-        Assertions.assertEquals(itemRequestResult, itemRequest);
+        Assertions.assertEquals(itemRequest, itemRequestResult);
     }
 
     @Test

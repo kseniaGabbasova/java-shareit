@@ -36,7 +36,7 @@ class ItemRequestControllerTest {
     @Autowired
     private MockMvc mvc;
     @Autowired
-    ObjectMapper mapper;
+    private ObjectMapper mapper;
 
     private User user1 = new User();
     private User user2 = new User();

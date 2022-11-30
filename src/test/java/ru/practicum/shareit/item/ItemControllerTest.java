@@ -30,14 +30,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @Import(CommentMapper.class)
 class ItemControllerTest {
     @MockBean
-    ItemService itemService;
+    private ItemService itemService;
     @Autowired
-    ObjectMapper mapper;
+    private ObjectMapper mapper;
     @Autowired
     private MockMvc mvc;
-    ItemDto itemDto = new ItemDto();
-    ItemDto itemDto1 = new ItemDto();
-    ItemDto itemDtoUpd = new ItemDto();
+    private ItemDto itemDto = new ItemDto();
+    private ItemDto itemDto1 = new ItemDto();
+    private ItemDto itemDtoUpd = new ItemDto();
 
     private User user = new User();
 

@@ -25,20 +25,20 @@ class ItemMapperTest {
     }
 
     @Test
-    void toItem() {
+    void toItemDto() {
         ItemDto result = itemMapper.toItemDto(item);
-        Assertions.assertEquals(result.getId(), itemDto.getId());
-        Assertions.assertEquals(result.getName(), itemDto.getName());
-        Assertions.assertEquals(result.getDescription(), itemDto.getDescription());
-        Assertions.assertEquals(result.getComments(), itemDto.getComments());
+        Assertions.assertEquals(itemDto.getId(), result.getId());
+        Assertions.assertEquals(itemDto.getName(), result.getName());
+        Assertions.assertEquals(itemDto.getDescription(), result.getDescription());
+        Assertions.assertEquals(itemDto.getComments(), result.getComments());
     }
 
     @Test
-    void toItemDto() {
+    void toItem() {
         Item result = itemMapper.toItem(itemDto, 1, 1);
-        Assertions.assertEquals(result.getId(), item.getId());
-        Assertions.assertEquals(result.getName(), item.getName());
-        Assertions.assertEquals(result.getDescription(), item.getDescription());
-        Assertions.assertEquals(result.getOwner(), item.getOwner());
+        Assertions.assertEquals(item.getId(), result.getId());
+        Assertions.assertEquals(item.getName(), result.getName());
+        Assertions.assertEquals(item.getDescription(), result.getDescription());
+        Assertions.assertEquals(item.getOwner(), result.getOwner());
     }
 }

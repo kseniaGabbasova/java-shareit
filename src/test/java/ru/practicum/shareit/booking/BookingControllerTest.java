@@ -27,15 +27,15 @@ class BookingControllerTest {
     @MockBean
     private BookingService bookingService;
     @Autowired
-    ObjectMapper mapper;
+    private ObjectMapper mapper;
     @Autowired
     private MockMvc mvc;
 
-    BookingDto bookingDto = new BookingDto();
+    private BookingDto bookingDto = new BookingDto();
     private BookingDto.User user = new BookingDto.User();
     private BookingDto.User user1 = new BookingDto.User();
     private BookingDto.Item item = new BookingDto.Item();
-    BookingDto bookingDto1 = new BookingDto();
+    private BookingDto bookingDto1 = new BookingDto();
 
     @BeforeEach
     void init() {

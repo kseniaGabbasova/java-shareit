@@ -43,8 +43,8 @@ class UserServiceImplTest {
         when(userRepository.findAll())
                 .thenReturn(List.of(user1, user2));
         List<UserDto> usersResult = userService.getAll();
-        Assertions.assertEquals(usersResult.size(), 2);
-        Assertions.assertEquals(usersResult, List.of(UserMapper.toUserDto(user1), UserMapper.toUserDto(user2)));
+        Assertions.assertEquals(2, usersResult.size());
+        Assertions.assertEquals(List.of(UserMapper.toUserDto(user1), UserMapper.toUserDto(user2)), usersResult);
     }
 
     @Test
@@ -72,9 +72,9 @@ class UserServiceImplTest {
         updUser.setName("UpdUser");
         updUser.setEmail("upd@user.com");
         UserDto resultUser = userService.update(1, updUser);
-        Assertions.assertEquals(resultUser.getId(), 1);
-        Assertions.assertEquals(resultUser.getName(), updUser.getName());
-        Assertions.assertEquals(resultUser.getEmail(), updUser.getEmail());
+        Assertions.assertEquals(1, resultUser.getId());
+        Assertions.assertEquals(updUser.getName(), resultUser.getName());
+        Assertions.assertEquals(updUser.getEmail(), resultUser.getEmail());
     }
 
     @Test

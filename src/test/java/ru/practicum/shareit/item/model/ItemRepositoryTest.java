@@ -36,8 +36,8 @@ class ItemRepositoryTest {
                 .createQuery("SELECT i FROM Item i WHERE upper(i.name) like upper(concat('%',:str,'%'))" +
                         " OR upper(i.description) like upper(concat('%',:str,'%')) ", Item.class);
         List<Item> items = query.setParameter("str", "item").getResultList();
-        Assertions.assertEquals(items.size(), 1);
-        Assertions.assertEquals(items.toArray()[0], item1);
+        Assertions.assertEquals(1, items.size());
+        Assertions.assertEquals(item1, items.toArray()[0]);
     }
 
 }
