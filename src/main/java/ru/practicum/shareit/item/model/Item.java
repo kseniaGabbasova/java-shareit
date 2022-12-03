@@ -10,6 +10,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @JsonIgnoreProperties({"hibernateLazyInitializer"})
 @Getter
+@EqualsAndHashCode
 @Setter
 @Builder
 @Entity
@@ -30,5 +31,5 @@ public class Item {
     @Column(name = "owner_id")
     private Integer owner;
     @Column(name = "request_id")
-    private Integer request;
+    private Integer requestId;
 }

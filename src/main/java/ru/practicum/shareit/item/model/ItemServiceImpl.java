@@ -82,15 +82,15 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public Item add(Item item) {
+    public ItemDto add(Item item) {
         userService.getById(item.getOwner());
         log.info("Добавление вещи {}", item);
-        return itemRepository.save(item);
+        return ItemMapper.toItemDto(itemRepository.save(item));
     }
 
     @Override
     @Transactional
-    public Item update(Item item) throws NotFoundException {
+    public ItemDto update(Item item) throws NotFoundException {
         Item itemToUpdate = itemRepository.getReferenceById(item.getId());
         validateOwner(item, itemToUpdate);
         if (item.getName() != null) {
@@ -103,7 +103,7 @@ public class ItemServiceImpl implements ItemService {
             itemToUpdate.setAvailable(item.getAvailable());
         }
         log.info("Вещь с id = {} обноевлена", itemToUpdate.getId());
-        return itemToUpdate;
+        return ItemMapper.toItemDto(itemToUpdate);
     }
 
     @Override
@@ -113,14 +113,18 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> search(String text) {
+    public List<ItemDto> search(String text) {
         if (text.isBlank()) {
             log.info("В поле поиска был подан пустой текст");
             return new ArrayList<>();
         }
         String textForMethod = "%" + text + "%";
         log.info("Выполняется поиск по строке {}", text);
-        return itemRepository.search(textForMethod);
+        List<ItemDto> result = new ArrayList<>();
+        for (Item item : itemRepository.search(textForMethod)) {
+            result.add(ItemMapper.toItemDto(item));
+        }
+        return result;
     }
 
     private void validateOwner(Item item, Item anotherItem) {
@@ -152,11 +156,11 @@ public class ItemServiceImpl implements ItemService {
     private void addBookings(ItemDto itemDto) {
         Booking lastBooking = bookingRepository.getLastBooking(itemDto.getId(), LocalDateTime.now());
         if (lastBooking != null) {
-            itemDto.setLastBooking(new ItemDto.Booking(lastBooking.getId(), lastBooking.getBooker().getId()));
+            itemDto.setLastBooking(new ItemDto.Booking(lastBooking.getId(), lastBooking.getBooker()));
         }
         Booking nextBooking = bookingRepository.getNextBooking(itemDto.getId(), LocalDateTime.now());
         if (nextBooking != null) {
-            itemDto.setNextBooking(new ItemDto.Booking(nextBooking.getId(), nextBooking.getBooker().getId()));
+            itemDto.setNextBooking(new ItemDto.Booking(nextBooking.getId(), nextBooking.getBooker()));
         }
     }
 
@@ -168,5 +172,11 @@ public class ItemServiceImpl implements ItemService {
                 .collect(Collectors.toList());
         itemDto.setComments(comments);
     }
+
+    @Override
+    public List<Item> getAllByRequestIdOrderByIdAsc(Long requestId) {
+        return itemRepository.getAllByRequestIdOrderByIdAsc(requestId);
+    }
+
 
 }

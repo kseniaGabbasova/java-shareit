@@ -32,14 +32,20 @@ public class ItemController {
     }
 
     @PostMapping
-    public Item create(@RequestHeader("X-Sharer-User-Id") Integer userId,
+    public ItemDto create(@RequestHeader("X-Sharer-User-Id") Integer userId,
                        @Validated(Create.class) @RequestBody ItemDto itemDto) throws ValidationException {
-        Item item = ItemMapper.toItem(itemDto, userId, null);
+
+        Item item;
+        if (itemDto.getRequestId() != null) {
+            item = ItemMapper.toItem(itemDto, userId, itemDto.getRequestId());
+        } else {
+            item = ItemMapper.toItem(itemDto, userId, null);
+        }
         return itemService.add(item);
     }
 
     @PatchMapping("{id}")
-    public Item update(@RequestHeader("X-Sharer-User-Id") Integer userId,
+    public ItemDto update(@RequestHeader("X-Sharer-User-Id") Integer userId,
                        @PathVariable Integer id,
                        @RequestBody ItemDto itemDto) throws ValidationException {
         Item item = ItemMapper.toItem(itemDto, userId, null);
@@ -53,7 +59,7 @@ public class ItemController {
     }
 
     @GetMapping("search")
-    public List<Item> getAll(@RequestParam String text) {
+    public List<ItemDto> getAllSearch(@RequestParam String text) {
         return itemService.search(text);
 
     }

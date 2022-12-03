@@ -13,6 +13,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
             "FROM users",
             nativeQuery = true)
     List<String> getAllEmails();
-
-
 }

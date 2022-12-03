@@ -4,8 +4,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
+import ru.practicum.shareit.user.dto.UserDto;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -15,8 +17,12 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> getAll() {
-        return userRepository.findAll();
+    public List<UserDto> getAll() {
+        List<UserDto> result = new ArrayList<>();
+        for (User u : userRepository.findAll()) {
+            result.add(UserMapper.toUserDto(u));
+        }
+        return result;
     }
 
     @Override
@@ -30,14 +36,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User add(User user) {
+    public UserDto add(User user) {
         log.info("Добавление пользователя {}", user);
-        return userRepository.save(user);
+        return UserMapper.toUserDto(userRepository.save(user));
     }
 
     @Override
     @Transactional
-    public User update(Integer id, User user) throws NotFoundException {
+    public UserDto update(Integer id, User user) throws NotFoundException {
         User userToUpdate = userRepository.getReferenceById(id);
         if (user.getName() != null) {
             userToUpdate.setName(user.getName());
@@ -50,7 +56,7 @@ public class UserServiceImpl implements UserService {
             }
         }
         log.info("Пользователь с id = {} обновлен", id);
-        return userToUpdate;
+        return UserMapper.toUserDto(userToUpdate);
     }
 
     @Override

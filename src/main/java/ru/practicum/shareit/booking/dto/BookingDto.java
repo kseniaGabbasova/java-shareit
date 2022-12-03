@@ -14,6 +14,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookingDto {
@@ -34,12 +35,14 @@ public class BookingDto {
 
     @Data
     @NoArgsConstructor
+    @EqualsAndHashCode
     @AllArgsConstructor
     public static class User {
         private Integer id;
     }
 
     @AllArgsConstructor
+    @EqualsAndHashCode
     @NoArgsConstructor
     @Data
     public static class Item {
