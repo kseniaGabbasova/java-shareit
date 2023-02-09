@@ -1,6 +1,5 @@
 package ru.practicum.shareit.client;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.*;
 import org.springframework.lang.Nullable;
 import org.springframework.web.client.HttpStatusCodeException;
@@ -9,7 +8,6 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
 public class BaseClient {
     protected final RestTemplate rest;
 
@@ -30,7 +28,6 @@ public class BaseClient {
     }
 
     protected <T> ResponseEntity<Object> post(String path, T body) {
-        log.info("I'm here1");
         return post(path, null, null, body);
     }
 
@@ -39,7 +36,6 @@ public class BaseClient {
     }
 
     protected <T> ResponseEntity<Object> post(String path, Integer userId, @Nullable Map<String, Object> parameters, T body) {
-        log.info("I'm here");
         return makeAndSendRequest(HttpMethod.POST, path, userId, parameters, body);
     }
 

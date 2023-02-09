@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.shareit.request.dto.ItemRequestDto;
 
-import javax.validation.Valid;
 import java.util.Collection;
 
 @RestController
@@ -14,7 +13,7 @@ public class ItemRequestController {
     private final ItemRequestService itemRequestService;
 
     @PostMapping
-    public ItemRequestDto add(@Valid @RequestBody ItemRequestDto itemRequestDto,
+    public ItemRequestDto add(@RequestBody ItemRequestDto itemRequestDto,
                               @RequestHeader("X-Sharer-User-Id") Integer requestorId) {
         ItemRequest itemRequest = ItemRequestMapper.toItemRequest(itemRequestDto, requestorId);
         return ItemRequestMapper.toDto(itemRequestService.add(itemRequest));

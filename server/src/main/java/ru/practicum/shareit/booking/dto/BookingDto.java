@@ -6,7 +6,6 @@ import ru.practicum.shareit.booking.Status;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.validation.constraints.FutureOrPresent;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,9 +17,7 @@ import java.time.LocalDateTime;
 public class BookingDto {
 
     private Integer id;
-    @FutureOrPresent
     private LocalDateTime start;
-    @FutureOrPresent
     private LocalDateTime end;
     private BookingDto.User booker;
     private BookingDto.Item item;

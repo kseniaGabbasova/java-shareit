@@ -28,7 +28,6 @@ public class UserController {
 
     @PostMapping
     public UserDto create(@RequestBody UserDto userDto) throws ValidationException {
-        //User user = UserMapper.toUser(userDto);
         return userService.add(userDto);
     }
 

@@ -35,7 +35,6 @@ public class UserClient extends BaseClient {
     }
 
     public ResponseEntity<Object> addNewUser(UserDto requestDto) {
-        log.warn("I'm in UserClient");
         return post("", requestDto);
     }
 
