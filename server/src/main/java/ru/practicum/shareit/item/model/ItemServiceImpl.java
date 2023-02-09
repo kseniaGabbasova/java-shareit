@@ -68,7 +68,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     public List<ItemDto> getAllByOwner(Integer owner) throws NotFoundException {
         userService.getById(owner);
-        List<ItemDto> list = itemRepository.findByOwner(owner)
+        List<ItemDto> list = itemRepository.findByOwnerOrderByIdAsc(owner)
                 .stream()
                 .map(ItemMapper::toItemDto)
                 .collect(Collectors.toList());

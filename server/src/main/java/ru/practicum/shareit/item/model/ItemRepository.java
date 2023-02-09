@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 
 public interface ItemRepository extends JpaRepository<Item, Integer> {
-    List<Item> findByOwner(Integer id);
+    List<Item> findByOwnerOrderByIdAsc(Integer id);
 
     @Query(value = "" +
             "SELECT * " +

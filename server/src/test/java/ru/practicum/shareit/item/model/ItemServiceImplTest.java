@@ -139,7 +139,7 @@ class ItemServiceImplTest {
     @Test
     void getAllByOwner() {
         when(userService.getById(anyInt())).thenReturn(user1);
-        when(itemRepository.findByOwner(anyInt())).thenReturn(List.of(item1, item2));
+        when(itemRepository.findByOwnerOrderByIdAsc(anyInt())).thenReturn(List.of(item1, item2));
         when(bookingRepository.getLastBooking(anyInt(), any())).thenReturn(booking1);
         when(bookingRepository.getNextBooking(anyInt(), any())).thenReturn(booking1);
         List<ItemDto> result = itemService.getAllByOwner(1);
