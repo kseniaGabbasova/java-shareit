@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto add(UserDto userDto) {
-        if (userRepository.getAllEmails().contains(userDto.getEmail())){
+        if (userRepository.getAllEmails().contains(userDto.getEmail())) {
             throw new InternalError();
         }
         User user = UserMapper.toUser(userDto);

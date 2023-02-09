@@ -3,12 +3,10 @@ package ru.practicum.shareit.booking.dto;
 import lombok.*;
 import org.springframework.data.annotation.Transient;
 import ru.practicum.shareit.booking.Status;
-import ru.practicum.shareit.modes.Create;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.FutureOrPresent;
-import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
 
 @Getter
