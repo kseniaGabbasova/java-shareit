@@ -46,4 +46,11 @@ public class ErrorHandler {
     public ResponseEntity<Map<String, String>> handleSQLException(SQLException exception) {
         return new ResponseEntity<>(Map.of("error", exception.getMessage()), HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(ConflictException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public String handleConflictException(ConflictException exception) {
+        return exception.getMessage();
+    }
+
 }
